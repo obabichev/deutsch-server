@@ -17,8 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('words', 'WordController@index');
-Route::get('words/{word}', 'WordController@show');
-Route::post('words', 'WordController@store');
-Route::put('words/{word}', 'WordController@update');
-Route::delete('words/{word}', 'WordController@delete');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout');
+Route::post('register', 'Auth\RegisterController@register');
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('words', 'WordController@index');
+    Route::get('words/{word}', 'WordController@show');
+    Route::post('words', 'WordController@store');
+    Route::put('words/{word}', 'WordController@update');
+    Route::delete('words/{word}', 'WordController@delete');
+});
