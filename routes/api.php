@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('words', 'WordController@index');
+Route::get('words/{word}', 'WordController@show');
+Route::post('words', 'WordController@store');
+Route::put('words/{word}', 'WordController@update');
+Route::delete('words/{word}', 'WordController@delete');
