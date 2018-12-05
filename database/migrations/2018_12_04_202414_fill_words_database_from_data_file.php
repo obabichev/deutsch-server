@@ -14,7 +14,7 @@ class FillWordsDatabaseFromDataFile extends Migration
      */
     public function up()
     {
-        $this->fillDataBaseFromFile('./data/de-en-small.data');
+        $this->fillDataBaseFromFile('./data/de-en.data');
     }
 
     protected function fillDataBaseFromFile($file)
@@ -45,7 +45,6 @@ class FillWordsDatabaseFromDataFile extends Migration
         $pattern = '/^(\(([\w\däüöÄÜÖß\-\ ]+)\))?( )?([\w\däüöÄÜÖß\-\ ]+)( )?(\{(f|m|n|pl)\})?( \[([\w\däüöÄÜÖß\-]+)\])?\t(\(([\w\däüöÄÜÖß\-\ ]+)\))?( )?([\w\däüöÄÜÖß \-\ ]+)( \[([\w\däüöÄÜÖß\-\ ]+)\])?(\t([\w]+))?(\t(((\[[\w.]+\])( )?)*))?$/';
 
         $check = preg_match($pattern, $line, $matches);
-        print_r($matches);
         if ($check) {
             $word = [
                 'val_pre' => $this->getMatchedOrNull($matches, 2),
