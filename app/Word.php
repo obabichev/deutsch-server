@@ -12,14 +12,15 @@ class Word extends Model
             ->withTimestamps();
     }
 
+    public function translations() {
+        return $this->hasMany('App\Translation');
+    }
+
     protected $fillable = [
-        'val_pre',
+        'pre',
         'val',
-        'val_post',
+        'post',
         'gender',
-        'tr_pre',
-        'tr',
-        'tr_post',
         'type',
     ];
 }

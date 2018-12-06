@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class FillWordsDatabaseFromDataFile extends Migration
+class FillWordsWithTranslations extends Migration
 {
     /**
      * Run the migrations.
@@ -25,7 +24,16 @@ class FillWordsDatabaseFromDataFile extends Migration
             while (($line = fgets($handle)) !== false) {
                 $parsed = $this->parseLine($line);
                 if ($parsed) {
-                    $word = \App\Word::create($parsed['word']);
+                    $word = \App\Word::where('val', $parsed['word']['val'])->first();
+
+                    if (empty($word)) {
+                        $word = \App\Word::create($parsed['word']);
+                    }
+                    $parsed['translation']['word'] = $word->id;
+
+                    $translation = new \App\Translation($parsed['translation']);
+                    $translation->word()->associate($word);
+                    $translation->save();
 
                     foreach ($parsed['tags'] as $name) {
                         $tag = \App\Tag::firstOrCreate(['name' => $name]);
@@ -47,14 +55,16 @@ class FillWordsDatabaseFromDataFile extends Migration
         $check = preg_match($pattern, $line, $matches);
         if ($check) {
             $word = [
-                'val_pre' => $this->getMatchedOrNull($matches, 2),
+                'pre' => $this->getMatchedOrNull($matches, 2),
                 'val' => $this->getMatchedOrNull($matches, 4),
-                'val_post' => $this->getMatchedOrNull($matches, 9),
+                'post' => $this->getMatchedOrNull($matches, 9),
                 'gender' => $this->getMatchedOrNull($matches, 7),
-                'tr_pre' => $this->getMatchedOrNull($matches, 11),
-                'tr' => $this->getMatchedOrNull($matches, 13),
-                'tr_post' => $this->getMatchedOrNull($matches, 15),
                 'type' => $this->getMatchedOrNull($matches, 17),
+            ];
+            $translation = [
+                'pre' => $this->getMatchedOrNull($matches, 11),
+                'val' => $this->getMatchedOrNull($matches, 13),
+                'post' => $this->getMatchedOrNull($matches, 15),
             ];
             $tags = [];
             if (isset($matches[19])) {
@@ -63,7 +73,8 @@ class FillWordsDatabaseFromDataFile extends Migration
 
             return [
                 'word' => $word,
-                'tags' => $tags
+                'tags' => $tags,
+                'translation' => $translation,
             ];
         } else {
             return null;
@@ -111,5 +122,6 @@ class FillWordsDatabaseFromDataFile extends Migration
     {
         \App\Word::truncate();
         \App\Tag::truncate();
+        \App\Translation::truncate();
     }
 }
