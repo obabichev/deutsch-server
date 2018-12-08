@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function glossaries()
+    {
+        return $this->hasMany('\App\Glossaries');
+    }
+
     public function generateToken()
     {
         $this->api_token = str_random(60);

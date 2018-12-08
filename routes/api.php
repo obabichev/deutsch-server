@@ -27,4 +27,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('words', 'WordController@store');
     Route::put('words/{word}', 'WordController@update');
     Route::delete('words/{word}', 'WordController@delete');
+
+    Route::get('glossary', 'GlossaryController@index');
+    Route::post('glossary', 'GlossaryController@store');
+    Route::put('glossary/{glossary}', 'GlossaryController@update');
+    Route::delete('glossary/{glossary}', 'GlossaryController@delete');
 });
