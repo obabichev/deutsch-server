@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('words', 'WordController@index');
     Route::get('words/{word}', 'WordController@show');
     Route::post('words', 'WordController@store');
+    Route::post('words/search', 'WordController@search');
     Route::put('words/{word}', 'WordController@update');
     Route::delete('words/{word}', 'WordController@delete');
 
@@ -32,4 +33,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('glossary', 'GlossaryController@store');
     Route::put('glossary/{glossary}', 'GlossaryController@update');
     Route::delete('glossary/{glossary}', 'GlossaryController@delete');
+
+    Route::post('translation/search', 'TranslationController@search');
+
+    Route::post('glossarycard', 'GlossaryCardController@store');
 });

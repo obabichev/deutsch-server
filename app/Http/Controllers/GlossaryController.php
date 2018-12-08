@@ -15,6 +15,7 @@ class GlossaryController extends Controller
 
         return Glossary::where('owner_id', $user->id)
             ->limit(100)
+            ->with(['cards.word', 'cards.translation'])
             ->get();
     }
 

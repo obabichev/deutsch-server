@@ -14,4 +14,9 @@ class Glossary extends Model
     {
         return $this->belongsTo('\App\User');
     }
+
+    public function cards()
+    {
+        return $this->hasMany('App\GlossaryCard');
+    }
 }
