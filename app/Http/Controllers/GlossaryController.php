@@ -19,6 +19,11 @@ class GlossaryController extends Controller
             ->get();
     }
 
+    public function show(Glossary $glossary)
+    {
+        $glossary->load(['cards.word', 'cards.translation']);
+        return $glossary;
+    }
 
     public function store(Request $request)
     {
