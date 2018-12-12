@@ -16,6 +16,11 @@ class TranslationController extends Controller
             $query->where('word_id', $request->input('word_id'));
         }
 
+        if ($request->has('val')) {
+            $val = $request->input('val') . '%';
+            $query->where('val', 'ilike', $val);
+        }
+
         return $query->limit(15)
             ->orderByRaw('CHAR_LENGTH(val)')
             ->get();

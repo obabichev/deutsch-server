@@ -33,9 +33,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('glossary/{glossary}', 'GlossaryController@show');
     Route::post('glossary', 'GlossaryController@store');
     Route::put('glossary/{glossary}', 'GlossaryController@update');
-    Route::delete('glossary/{glossary}', 'GlossaryController@delete');
+    Route::delete('glossary/{id}', 'GlossaryController@delete');
 
     Route::post('translation/search', 'TranslationController@search');
 
     Route::post('glossarycard', 'GlossaryCardController@store');
+    Route::delete('glossarycard/{id}', 'GlossaryCardController@delete');
 });

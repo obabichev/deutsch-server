@@ -29,12 +29,15 @@ class GlossaryCardController extends Controller
         $glossaryCard->glossary()->associate($data['glossary']);
 
         $glossaryCard->save();
+        $glossaryCard->load(['word', 'translation']);
 
         return response()->json($glossaryCard, 201);
     }
 
-    public function delete()
+    public function delete($id)
     {
+        GlossaryCard::find($id)->delete();
 
+        return response()->json(null, 204);
     }
 }

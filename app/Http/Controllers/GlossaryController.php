@@ -35,6 +35,7 @@ class GlossaryController extends Controller
         ]);
         $glossary->owner()->associate($user);
         $glossary->save();
+        $glossary->load(['cards.word', 'cards.translation']);
 
         return response()->json($glossary, 201);
     }
@@ -46,9 +47,9 @@ class GlossaryController extends Controller
         return response()->json($glossary, 200);
     }
 
-    public function delete(Glossary $glossary)
+    public function delete($id)
     {
-        $glossary->delete();
+        Glossary::find($id)->delete();
 
         return response()->json(null, 204);
     }
