@@ -39,4 +39,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('glossarycard', 'GlossaryCardController@store');
     Route::delete('glossarycard/{id}', 'GlossaryCardController@delete');
+
+    Route::get('wordprogress', 'WordProgressController@index');
+    Route::post('wordprogress', 'WordProgressController@store');
 });

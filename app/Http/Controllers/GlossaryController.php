@@ -43,6 +43,7 @@ class GlossaryController extends Controller
     public function update(Request $request, Glossary $glossary)
     {
         $glossary->update($request->all());
+        $glossary->load(['cards.word', 'cards.translation']);
 
         return response()->json($glossary, 200);
     }
