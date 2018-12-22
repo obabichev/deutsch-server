@@ -42,4 +42,5 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('wordprogress', 'WordProgressController@index');
     Route::post('wordprogress', 'WordProgressController@store');
+    Route::put('wordprogress/{wordProgress}', 'WordProgressController@update');
 });

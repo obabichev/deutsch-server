@@ -24,7 +24,7 @@ class ExpandWordProgressTable extends Migration
                 ->onDelete('cascade');
             $table->boolean('learned')->default(false);
             $table->integer('mistakes')->unsigned()->default(0);
-            $table->date('repeat')->nullable();
+            $table->timestamp('repeat')->nullable();
             $table->integer('successes')->unsigned()->default(0);
             $table->boolean('excellent')->default(false);
         });

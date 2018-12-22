@@ -16,6 +16,19 @@ class WordProgress extends Model
         return $this->belongsTo('\App\Word');
     }
 
+    /**
+     * @return \DateTime mixed
+     */
+    public function getRepeat()
+    {
+        return new \DateTime($this->repeat);
+    }
+
+    public function setRepeat(\DateTime $repeat)
+    {
+        $this->repeat = $repeat;
+    }
+
     protected $fillable = [
         'learned',
         'mistakes',
