@@ -8,13 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class WordProgressController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        return WordProgress::where('user_id', $user->id)
-            ->limit(100)
+        $filter = $request->query->get('filter');
+
+        $query = WordProgress::where('user_id', $user->id);
+
+        if ($filter === 'repeat') {
+            $query->where('repeat', '<', new \DateTime());
+        }
+
+        $progresses = $query->limit(100)
             ->get();
+
+        $progresses->load(['word', 'translation']);
+        return $progresses;
     }
 
     public function store(Request $request)
@@ -23,14 +33,18 @@ class WordProgressController extends Controller
         $data = $request->all();
 
         $wordId = $data['word_id'];
+        $translation_id = $data['translation_id'];
 
         $wordProgress = WordProgress::where('user_id', $user->id)
-            ->where('word_id', $wordId)->first();
+            ->where('word_id', $wordId)
+            ->where('translation_id', $translation_id)
+            ->first();
 
         if (empty($wordProgress)) {
             $wordProgress = new WordProgress();
             $wordProgress->user()->associate($user);
             $wordProgress->word()->associate($wordId);
+            $wordProgress->translation()->associate($translation_id);
         }
 
         if (isset($data['learned'])) {
@@ -63,11 +77,11 @@ class WordProgressController extends Controller
         $success = $data['success'];
         if ($success) {
             $wordProgress->successes = $wordProgress->successes + 1;
+            $wordProgress->setRepeat($this->calculateRepeatDate($wordProgress));
         } else {
             $wordProgress->mistakes = $wordProgress->mistakes + 1;
         }
 
-        $wordProgress->setRepeat($this->calculateRepeatDate($wordProgress));
         $wordProgress->save();
     }
 

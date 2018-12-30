@@ -16,6 +16,11 @@ class WordProgress extends Model
         return $this->belongsTo('\App\Word');
     }
 
+    public function translation()
+    {
+        return $this->belongsTo('\App\Translation');
+    }
+
     /**
      * @return \DateTime mixed
      */
