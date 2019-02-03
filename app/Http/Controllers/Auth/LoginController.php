@@ -40,6 +40,36 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     operationId="login",
+     *     tags={"Auth"},
+     *     summary="Login",
+     *     description="Login",
+     *     @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *     ),
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string"
+     *                 ),
+     *                 example={"email": "test@gmail.com", "password": "testtest"}
+     *             )
+     *         )
+     *     ),
+     *   )
+     */
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -56,6 +86,30 @@ class LoginController extends Controller
         throw new UnauthorizedHttpException("challenge", 'Incorrect username or password.');
     }
 
+
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     operationId="logout",
+     *     tags={"Auth"},
+     *     summary="Logout",
+     *     description="Logout",
+     *     security={{"api_key":{}}},
+     *     @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *     ),
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 example={}
+     *             )
+     *         )
+     *     ),
+     *   )
+     */
     public function logout(Request $request)
     {
         $user = Auth::guard('api')->user();

@@ -7,6 +7,29 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+/**
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="Dapp",
+ *      description="Dapp application rest api",
+ *      @OA\Contact(
+ *          email="babichev.oleg.n@gmail.com"
+ *      ),
+ *     @OA\License(
+ *         name="Apache 2.0",
+ *         url="http://www.apache.org/licenses/LICENSE-2.0.html"
+ *     )
+ * )
+ */
+
+/**
+ * @OA\SecurityScheme(
+ *   securityScheme="api_key",
+ *   type="apiKey",
+ *   in="header",
+ *   name="Authorization"
+ * )
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

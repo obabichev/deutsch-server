@@ -5,8 +5,27 @@ namespace App\Http\Controllers;
 use App\Word;
 use Illuminate\Http\Request;
 
+
 class WordController extends Controller
 {
+    /**
+     * @OA\Get(
+     *      path="/api/words",
+     *      operationId="getRandomWord",
+     *      tags={"Words"},
+     *      summary="Get random word",
+     *      description="Returns random word",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *   security={{"api_key":{}}}
+     *     )
+     *
+     * Returns list of projects
+     */
     public function index()
     {
         return Word::find(1);
