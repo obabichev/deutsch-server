@@ -1,6 +1,8 @@
 <?php
 
+use App\Exceptions\Formatters\ModelNotFoundExceptionFormatter;
 use App\Exceptions\Formatters\UnauthorizedHttpExceptionFormatter;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception as SymfonyException;
 use Optimus\Heimdal\Formatters;
 
@@ -9,6 +11,7 @@ return [
 
     // Has to be in prioritized order, e.g. highest priority first.
     'formatters' => [
+        ModelNotFoundException::class => ModelNotFoundExceptionFormatter::class,
         SymfonyException\UnprocessableEntityHttpException::class =>
             Formatters\UnprocessableEntityHttpExceptionFormatter::class,
         SymfonyException\UnauthorizedHttpException::class =>

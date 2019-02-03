@@ -8,29 +8,40 @@ use Illuminate\Http\Request;
 
 class WordController extends Controller
 {
-    /**
-     * @OA\Get(
-     *      path="/api/words",
-     *      operationId="getRandomWord",
-     *      tags={"Words"},
-     *      summary="Get random word",
-     *      description="Returns random word",
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
-     *   security={{"api_key":{}}}
-     *     )
-     *
-     * Returns list of projects
-     */
+
     public function index()
     {
         return Word::find(1);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/words/{wordId}",
+     *      operationId="getRandomWord",
+     *      tags={"Words"},
+     *      summary="Get random word",
+     *      description="Returns random word",
+     *      @OA\Parameter(
+     *         name="wordId",
+     *         in="path",
+     *         description="ID of word to return",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *       @OA\Response(response=404, description="Resource not found"),
+     *   security={{"api_key":{}}}
+     *     )
+     *
+     * Returns list of projects
+     */
     public function show(Word $word)
     {
         return $word;
@@ -43,6 +54,38 @@ class WordController extends Controller
         return response()->json($word, 201);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/words/search",
+     *      operationId="searchWords",
+     *      tags={"Words"},
+     *      summary="Search words by value",
+     *      description="Search words by value",
+     * @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="val",
+     *                     type="string"
+     *                 ),
+     *                 example={"val": "test"}
+     *             )
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *   security={{"api_key":{}}}
+     *     )
+     *
+     * Returns list of projects
+     *
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function search(Request $request)
     {
         $query = Word::query();

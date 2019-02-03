@@ -1,10 +1,10 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "L5 OpenApi",
-        "description": "L5 Swagger OpenApi description",
+        "title": "Dapp",
+        "description": "Dapp application rest api",
         "contact": {
-            "email": "darius@matulionis.lt"
+            "email": "babichev.oleg.n@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -84,7 +84,7 @@
                 ]
             }
         },
-        "/api/words": {
+        "/api/words/{wordId}": {
             "get": {
                 "tags": [
                     "Words"
@@ -92,6 +92,18 @@
                 "summary": "Get random word",
                 "description": "Returns random word",
                 "operationId": "getRandomWord",
+                "parameters": [
+                    {
+                        "name": "wordId",
+                        "in": "path",
+                        "description": "ID of word to return",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -101,8 +113,50 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/words/search": {
+            "post": {
+                "tags": [
+                    "Words"
+                ],
+                "summary": "Search words by value",
+                "description": "Search words by value",
+                "operationId": "searchWords",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "val": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "val": "test"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
