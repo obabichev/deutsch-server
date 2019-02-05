@@ -28,8 +28,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('words/{word}', 'WordController@show');
 //    Route::post('words', 'WordController@store');
     Route::post('words/search', 'WordController@search');
-    Route::put('words/{word}', 'WordController@update');
-    Route::delete('words/{word}', 'WordController@delete');
+//    Route::put('words/{word}', 'WordController@update');
+//    Route::delete('words/{word}', 'WordController@delete');
 
     Route::get('glossary', 'GlossaryController@index');
     Route::get('glossary/{glossary}', 'GlossaryController@show');

@@ -8,6 +8,36 @@ use Illuminate\Support\Facades\Auth;
 
 class WordProgressController extends Controller
 {
+    /**
+     * @OA\Get(
+     *      path="/api/wordprogress",
+     *      operationId="getWordProgresses",
+     *      tags={"Word progress"},
+     *      summary="Get word progresses list",
+     *      description="Get word progresses list",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *   security={{"api_key":{}}}
+     *     )
+     */
+    /**
+     * @OA\Get(
+     *      path="/api/wordprogress?filter=repeat",
+     *      operationId="getRepeatWordProgresses",
+     *      tags={"Word progress"},
+     *      summary="Get word progresses to repeat",
+     *      description="Get word progresses to repeat",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *   security={{"api_key":{}}}
+     *     )
+     */
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -27,6 +57,46 @@ class WordProgressController extends Controller
         return $progresses;
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/wordprogress",
+     *      operationId="wordprogressPost",
+     *      tags={"Word progress"},
+     *      summary="Create word progress",
+     *      description="Create word progress",
+     * @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="learned",
+     *                     type="bool"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="word_id",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="translation_id",
+     *                     type="integer"
+     *                 ),
+     *                 example={
+     *                      "learned": true,
+     *                      "word_id": 362742,
+     *                      "translation_id": 1
+     *                  }
+     *             )
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *     @OA\Response(response=404, description="Resource not found"),
+     *   security={{"api_key":{}}}
+     *     )
+     */
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -63,6 +133,44 @@ class WordProgressController extends Controller
         return response()->json($wordProgress, 201);
     }
 
+    /**
+     * @OA\PUT(
+     *      path="/api/wordprogress/{wordprogressId}?action=repeat",
+     *      operationId="wordProgressRepeatPut",
+     *      tags={"Word progress"},
+     *      summary="Repeat word progress",
+     *      description="Repeat word progress",
+     *      @OA\Parameter(
+     *         name="wordprogressId",
+     *         in="path",
+     *         description="ID of word progress",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     * @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="success",
+     *                     type="bool"
+     *                 ),
+     *                 example={"success": true}
+     *             )
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *     @OA\Response(response=404, description="Resource not found"),
+     *   security={{"api_key":{}}}
+     *     )
+     */
     public function update(Request $request, WordProgress $wordProgress)
     {
         $action = $request->query->get('action');

@@ -14,34 +14,7 @@ class WordController extends Controller
         return Word::find(1);
     }
 
-    /**
-     * @OA\Get(
-     *      path="/api/words/{wordId}",
-     *      operationId="getRandomWord",
-     *      tags={"Words"},
-     *      summary="Get random word",
-     *      description="Returns random word",
-     *      @OA\Parameter(
-     *         name="wordId",
-     *         in="path",
-     *         description="ID of word to return",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int64"
-     *         )
-     *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *       @OA\Response(response=404, description="Resource not found"),
-     *   security={{"api_key":{}}}
-     *     )
-     *
-     * Returns list of projects
-     */
+
     public function show(Word $word)
     {
         return $word;
@@ -80,8 +53,6 @@ class WordController extends Controller
      *       ),
      *   security={{"api_key":{}}}
      *     )
-     *
-     * Returns list of projects
      *
      * @param Request $request
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection

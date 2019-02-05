@@ -84,19 +84,177 @@
                 ]
             }
         },
-        "/api/words/{wordId}": {
-            "get": {
+        "/api/glossarycard": {
+            "post": {
                 "tags": [
-                    "Words"
+                    "Glossary card"
                 ],
-                "summary": "Get random word",
-                "description": "Returns random word",
-                "operationId": "getRandomWord",
+                "summary": "Create glossary card",
+                "description": "Create glossary card",
+                "operationId": "glossarycardPost",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "word": {
+                                        "type": "integer"
+                                    },
+                                    "translation": {
+                                        "type": "integer"
+                                    },
+                                    "glossary": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "word": 100,
+                                    "translation": 100,
+                                    "glossary": 4
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/glossarycard/{glossarycardId}": {
+            "delete": {
+                "tags": [
+                    "Glossary card"
+                ],
+                "summary": "Delete glossary card",
+                "description": "Delete glossary card",
+                "operationId": "delGlossaryCard",
                 "parameters": [
                     {
-                        "name": "wordId",
+                        "name": "glossarycardId",
                         "in": "path",
-                        "description": "ID of word to return",
+                        "description": "ID of glossary card",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/glossary": {
+            "get": {
+                "tags": [
+                    "Glossary"
+                ],
+                "summary": "Get glossaries list",
+                "description": "Returns glossaries list",
+                "operationId": "getGlossaries",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Glossary"
+                ],
+                "summary": "Create glossary",
+                "description": "Create glossary",
+                "operationId": "glossaryPost",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "title": "unknown"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/glossary/{glossaryId}": {
+            "get": {
+                "tags": [
+                    "Glossary"
+                ],
+                "summary": "Get glossary",
+                "description": "Returns glossary",
+                "operationId": "getGlossary",
+                "parameters": [
+                    {
+                        "name": "glossaryId",
+                        "in": "path",
+                        "description": "ID of glossary",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -115,6 +273,145 @@
                     },
                     "404": {
                         "description": "Resource not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Glossary"
+                ],
+                "summary": "Create glossary",
+                "description": "Create glossary",
+                "operationId": "glossaryPost",
+                "parameters": [
+                    {
+                        "name": "glossaryId",
+                        "in": "path",
+                        "description": "ID of glossary",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "title": "unknown"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Glossary"
+                ],
+                "summary": "Delete glossary",
+                "description": "Delete glossary",
+                "operationId": "delGlossary",
+                "parameters": [
+                    {
+                        "name": "glossaryId",
+                        "in": "path",
+                        "description": "ID of glossary",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/translation/search": {
+            "post": {
+                "tags": [
+                    "Translation"
+                ],
+                "summary": "Search translation by wordId and value",
+                "description": "Search translation by wordId and value",
+                "operationId": "searchTranslation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "val": {
+                                        "type": "string"
+                                    },
+                                    "word_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "word_id": 403102,
+                                    "val": ""
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -157,6 +454,164 @@
                                 "schema": {}
                             }
                         }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/wordprogress": {
+            "get": {
+                "tags": [
+                    "Word progress"
+                ],
+                "summary": "Get word progresses list",
+                "description": "Get word progresses list",
+                "operationId": "getWordProgresses",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Word progress"
+                ],
+                "summary": "Create word progress",
+                "description": "Create word progress",
+                "operationId": "wordprogressPost",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "learned": {
+                                        "type": "bool"
+                                    },
+                                    "word_id": {
+                                        "type": "integer"
+                                    },
+                                    "translation_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "learned": true,
+                                    "word_id": 362742,
+                                    "translation_id": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/wordprogress?filter=repeat": {
+            "get": {
+                "tags": [
+                    "Word progress"
+                ],
+                "summary": "Get word progresses to repeat",
+                "description": "Get word progresses to repeat",
+                "operationId": "getRepeatWordProgresses",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/wordprogress/{wordprogressId}?action=repeat": {
+            "put": {
+                "tags": [
+                    "Word progress"
+                ],
+                "summary": "Repeat word progress",
+                "description": "Repeat word progress",
+                "operationId": "wordProgressRepeatPut",
+                "parameters": [
+                    {
+                        "name": "wordprogressId",
+                        "in": "path",
+                        "description": "ID of word progress",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "success": {
+                                        "type": "bool"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "success": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "security": [
